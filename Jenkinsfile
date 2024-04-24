@@ -28,14 +28,14 @@ pipeline {
             steps {
                 dir('iac-files') {
                     script {
-                        def output = sh(script: 'terraform init', returnStdout: true)
-                        def output = sh(script: 'terraform plan', returnStdout: true)
-                        def output = sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        output.eachLine { line ->
-                            if (!line.contains("= (known after apply)")) {
-                                echo line
-                            }
-                        }
+                        sh(script: 'terraform init', returnStdout: true)
+                        sh(script: 'terraform plan', returnStdout: true)
+                        sh(script: 'terraform apply -auto-approve', returnStdout: true)
+                        // output.eachLine { line ->
+                        //     if (!line.contains("= (known after apply)")) {
+                        //         echo line
+                        //     }
+                        // }
                     }
                 }
             }
