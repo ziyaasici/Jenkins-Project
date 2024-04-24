@@ -7,6 +7,7 @@ pipeline {
         DOCKER_SERVER = 'Jenkins-Project-Docker'
         KEY_PAIR_NAME = 'docker_key_pair'
         PRIVATE_KEY_FILE = '/tmp/docker_key_pair.pem'
+        
     }
     stages {
         // stage('Checkout') {
