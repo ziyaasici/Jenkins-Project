@@ -19,11 +19,6 @@ pipeline {
                     // }
             }
         }
-        stage('Testing') {
-            steps {
-                echo "Testing"
-            }
-        }
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
@@ -42,7 +37,6 @@ pipeline {
             steps {
                 dir('iac-files') {
                     script {
-                        sh 'ls -al'
                         sh 'terraform plan'
                     }
                 }
@@ -59,10 +53,10 @@ pipeline {
         }
         stage('Check Created S3s') {
             steps {
-                    script {
-                        sh 'aws s3 ls'
-                    }
+                script {
+                    sh 'aws s3 ls'
                 }
             }
+        }
     }
 }
