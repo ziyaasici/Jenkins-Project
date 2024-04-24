@@ -23,7 +23,7 @@ pipeline {
         stage('Build Images') {
             steps {
                 dir('nodejs') {
-                    sh 'docker build -t "ziyaasici/nodejs:v1 ."'
+                    sh 'docker build -t ziyaasici/nodejs:v1 .'
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
                 }
             }
