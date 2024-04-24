@@ -1,26 +1,6 @@
 pipeline {
     agent any   
-    environment {
-        AWS_ACCESS=credentials('AWS-Jenkins')
-    }
     stages {
-        // stage('AWS Integration'){
-        //     steps{
-        //         withCredentials([[
-        //             $class: 'AmazonWebServicesCredentialsBinding',
-        //             credentialsId: 'AWS-Jenkins',
-        //             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-        //             {
-        //                 // sh "aws s3 ls"
-        //             }
-        //     }
-        // }
-        // stage('Checkout') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
-        //     }
-        // }
         stage('Create Infrastructure') {
             steps {
                 dir('iac-files') {
@@ -33,20 +13,11 @@ pipeline {
             }
         }
     }
-    // post {
-    //     // success {
-    //     //     // Stage to run on success
-    //     //     echo "Build SUCCEDED!"
-    //     // }
-    //     // failure {
-    //     //     // Stage to run on fail
-    //     //     echo "Build FAILED!"
-    //     // }
-    //     always {
-    //         // Stage to run always
-    //         dir('iac-files') {
-    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-    //         }
-    //     }
-    // }
+    post {
+        always {
+            dir('iac-files') {
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            }
+        }
+    }
 }
