@@ -12,7 +12,7 @@ pipeline {
         // }
         stage('Create Infrastructure') {
             steps {
-                dir('iac-files') {
+                dir('terraform-files') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
@@ -43,13 +43,13 @@ pipeline {
         stage('Push Images to ECR') {
             steps {
                 script {
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}'
-                    sh 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1'
-                    sh 'docker tag react:v1 ${ECR_REPO}/react:v1'
-                    sh 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1'
-                    sh 'docker push ${ECR_REPO}/postgresql:v1'
-                    sh 'docker push ${ECR_REPO}/react:v1'
-                    sh 'docker push ${ECR_REPO}/nodejs:v1'
+                    sh(script: 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}', returnStdout: true)
+                    sh(script: 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1', returnStdout: true)
+                    sh(script: 'docker tag react:v1 ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
                 }
             }
         }
