@@ -13,11 +13,9 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'AWS-Jenkins',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
 
                         sh aws ls ec2
-                        
-                    }
 
             }
         }
