@@ -3,6 +3,7 @@ FROM node:14
 # Create app directory
 WORKDIR /usr/src/app
 
+RUN pwd
 
 COPY ./nodejs/server/package*.json ./
 
