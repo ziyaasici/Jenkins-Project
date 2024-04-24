@@ -37,7 +37,8 @@ pipeline {
             steps {
                 dir('iac-files') {
                     script {
-                        sh 'terraform plan'
+                        def output = sh(script: 'terraform plan', returnStdout: true)
+                        echo "\u001B[32m${output}\u001B[0m" // Green color for successful output
                     }
                 }
             }
