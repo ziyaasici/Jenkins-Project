@@ -76,6 +76,7 @@ pipeline {
                 }
             }
         }
+    }
     post {
         always {
                 echo 'Removing local images!..'
