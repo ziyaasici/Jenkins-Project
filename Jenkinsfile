@@ -51,5 +51,12 @@ pipeline {
                 }
             }
         }
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    sh 'aws s3 ls'
+                }
+            }
+        }
     }
 }
