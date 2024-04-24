@@ -27,6 +27,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
+                sh "cd iac-files"
             }
         }
         stage('Terraform Init') {
