@@ -1,12 +1,21 @@
 pipeline {
     agent any
     
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
+    // environment {
+    //     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+    //     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    // }
 
     stages {
+        stage('AWS Integration'){
+            steps{
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'AWS-Jenkins',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+            }
+        }
         stage('Checkout') {
             steps {
                 git 'https://github.com/your-repo.git'
