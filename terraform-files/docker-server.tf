@@ -61,11 +61,3 @@ resource "aws_instance" "tf-ec2" {
               chmod +x /usr/local/bin/docker-compose
 	          EOF
 }  
-output "myec2-public-ip" {
-  value = aws_instance.tf-ec2.public_ip
-}
-
-output "ssh-connection-command" {
-  value = "ssh -i ${local.key-name}.pem ec2-user@${aws_instance.tf-ec2.public_ip}"
-}
-
