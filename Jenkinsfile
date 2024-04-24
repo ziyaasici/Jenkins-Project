@@ -1,11 +1,9 @@
 pipeline {
-    agent any
-    
+    agent any   
     // environment {
     //     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
     //     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     // }
-
     stages {
         stage('AWS Integration'){
             steps{
@@ -35,23 +33,19 @@ pipeline {
                 }
             }
         }
-        post {
-            success {
-                // Stage to run on success
-                echo "Build SUCCEDED!"
-            }
-        post {
-            failed {
-                // Stage to run on fail
-                echo "Build FAILED!"
-            }
+    }
+    post {
+        success {
+            // Stage to run on success
+            echo "Build SUCCEDED!"
         }
-        post {
-            always {
-                // Stage to run always
-                echo "Always POST"
-            }
+        failed {
+            // Stage to run on fail
+            echo "Build FAILED!"
         }
+        always {
+            // Stage to run always
+            echo "Always POST"
         }
     }
 }
