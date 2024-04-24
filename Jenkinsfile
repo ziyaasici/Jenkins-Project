@@ -19,11 +19,11 @@ pipeline {
                     }
             }
         }
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
+        //     }
+        // }
         stage('Create Infrastructure') {
             steps {
                 dir('iac-files') {
@@ -31,11 +31,6 @@ pipeline {
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        // output.eachLine { line ->
-                        //     if (!line.contains("= (known after apply)")) {
-                        //         echo line
-                        //     }
-                        // }
                     }
                 }
             }
