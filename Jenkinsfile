@@ -2,6 +2,7 @@ pipeline {
     agent any   
     environment {
         AWS_ACCESS=credentials('AWS-Jenkins')
+        ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
     }
     stages {
         // stage('Checkout') {
@@ -42,16 +43,15 @@ pipeline {
         stage('Push Images to ECR') {
             steps {
                 script {
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1'
-                    sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1'
-                    sh 'docker tag postgresql:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1'
+                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}'
+                    sh 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1'
+                    sh 'docker tag react:v1 ${ECR_REPO}/react:v1'
+                    sh 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1'
+                    sh 'docker push ${ECR_REPO}/postgresql:v1'
+                    sh 'docker push ${ECR_REPO}/react:v1'
+                    sh 'docker push ${ECR_REPO}/nodejs:v1'
                 }
             }
-
         }
     }
     // post {
