@@ -6,12 +6,12 @@ variable "instancetype" {
   default = "t3a.medium"
 }
 variable "tag" {
-  default = "Jenkins_Server_techpro"
+  default = "Jenkins_Server_Ziya"
 }
 variable "jenkins-sg" {
   default = "jenkins-server-sec-gr"
 }
 
 variable "user" {
-  default = "ziya"
+  default = "ziyaasici"
 }
