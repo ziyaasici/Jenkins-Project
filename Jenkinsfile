@@ -51,11 +51,22 @@ pipeline {
                 }
             }
         }
-        
         stage('Checking S3 Bucked if Created') {
             steps {
                 script {
                     sh 'aws s3 ls'
+                }
+            }
+        }
+        stage('Terraform Destroy') {
+            steps {
+                dir('iac-files') {
+                    script {
+                        echo '!!!!!'
+                        echo 'Everything worked as expected. Now deleting resources.'
+                        echo '!!!!!'
+                        sh 'terraform destroy -auto-approve'
+                    }
                 }
             }
         }
