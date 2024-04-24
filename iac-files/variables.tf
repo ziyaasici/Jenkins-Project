@@ -27,7 +27,3 @@ variable "docker_user" {
 variable "docker_ami" {
   default = "ami-0d7a109bf30624c99"
 }
-
-variable "ecr" {
-  default = "project"
-}

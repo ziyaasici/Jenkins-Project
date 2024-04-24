@@ -24,17 +24,17 @@ pipeline {
             steps {
                 dir('apps/nodejs') {
                     script {
-                        sh 'docker build -t nodejs:v1 .'
+                        sh(script: 'docker build -t nodejs:v1 .', returnStdout: true)
                     }
                 }
                 dir('apps/react') {
                     script {
-                        sh 'docker build -t react:v1 .'
+                        sh(script: 'docker build -t react:v1 .', returnStdout: true)
                     }
                 }
                 dir('apps/postgresql') {
                     script {
-                        sh 'docker build -t postgres:v1 .'
+                        sh(script: 'docker build -t postgres:v1 .', returnStdout: true)
                     }
                 }
             }
@@ -42,15 +42,13 @@ pipeline {
         stage('Push Images to ECR') {
             steps {
                 script {
-                    sh 'docker images'
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/nodejs:v1'
-                    sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/react:v1'
-                    sh 'docker tag postgres:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/postgres:v1'
-                    sh 'docker images'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/postgres:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/react:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/nodejs:v1'
+                    sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
+                    sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
+                    sh 'docker tag postgres:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres/postgres:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres/postgres:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
                 }
             }
 
