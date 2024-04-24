@@ -24,17 +24,17 @@ pipeline {
             steps {
                 dir('apps/nodejs') {
                     script {
-                        sh 'docker build -t nodejs:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1 .'
                     }
                 }
                 dir('apps/react') {
                     script {
-                        sh 'docker build -t react:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1 .'
                     }
                 }
                 dir('apps/postgresql') {
                     script {
-                        sh 'docker build -t postgres:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres:v1 .'
                     }
                 }
             }
@@ -43,9 +43,9 @@ pipeline {
             steps {
                 script {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker push postgres:v1'
-                    sh 'docker push react:v1'
-                    sh 'docker push nodejs:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1'
                 }
             }
 
