@@ -20,15 +20,15 @@ pipeline {
                 }
             }
         }
-        stage('Build Images') {
-            steps {
-                dir('nodejs') {
-                    script {
-                        sh 'docker build -t ziyaasici/nodejs:v1 .'
-                    }
-                }
-            }
-        }
+        // stage('Build Images') {
+        //     steps {
+        //         dir('nodejs') {
+        //             script {
+        //                 sh 'docker build -t ziyaasici/nodejs:v1 .'
+        //             }
+        //         }
+        //     }
+        // }
     }
     // post {
     //     failure {
