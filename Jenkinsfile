@@ -19,6 +19,11 @@ pipeline {
                     }
             }
         }
+        stage('Testing') {
+            steps {
+                echo "Testing"
+            }
+        }
         // stage('Checkout') {
         //     steps {
         //         git 'https://github.com/ziyaasici/Jenkins-Project.git'
