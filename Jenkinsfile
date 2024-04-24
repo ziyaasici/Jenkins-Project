@@ -43,12 +43,12 @@ pipeline {
             steps {
                 script {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
-                    sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
-                    sh 'docker tag postgresql:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql/postgresql:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql/postgresql:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
+                    sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1'
+                    sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1'
+                    sh 'docker tag postgresql:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1'
                 }
             }
 
