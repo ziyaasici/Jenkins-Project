@@ -22,9 +22,9 @@ pipeline {
         }
         stage('Build Images') {
             steps {
-                script {
-                    sh 'pwd'
-                    dir('nodejs') {
+                dir('iac-files') {
+                    script {
+                        sh 'pwd'
                         sh 'docker build -t ziyaasici/nodejs:v1 .'
                     }
                 }
