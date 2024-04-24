@@ -42,6 +42,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
+                    sh 'ls -al'
                     sh 'terraform plan'
                 }
             }
