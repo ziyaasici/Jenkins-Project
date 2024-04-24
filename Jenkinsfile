@@ -15,7 +15,7 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
                     {
-                        sh "aws s3 ls"
+                        // sh "aws s3 ls"
                     }
             }
         }
@@ -42,15 +42,16 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Destroy') {
+        stage('Destroy Infrastructure') {
             steps {
-                dir('iac-files') {
-                    script {
-                        echo '!!!!!'
-                        echo 'Everything worked as expected. Now deleting resources.'
-                        echo '!!!!!'
-                        sh 'terraform destroy -auto-approve'
-                    }
+                script {
+                    echo 'Waiting for 3 days before executing Terraform destroy...'
+                    // Sleep for 3 days (259,200 seconds)
+                    sleep time: 259200, unit: 'SECONDS'
+                    echo '!!!!!'
+                    echo 'Everything worked as expected. Now deleting resources.'
+                    echo '!!!!!'
+                    sh 'terraform destroy -auto-approve'
                 }
             }
         }
