@@ -45,7 +45,7 @@ pipeline {
         }
         always {
             // Stage to run always
-            echo "Always POST"
+            sh(script: 'terraform destroy -auto-approve', returnStdout: true)
         }
     }
 }
