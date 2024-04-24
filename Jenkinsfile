@@ -54,7 +54,7 @@ pipeline {
                 }
             }
         }
-        stage('Wait for EC2 to be Running') {
+        stage('Wait') {
             steps {
                 script {
                     def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=your_instance_name --region ${AWS_REGION} --query 'Reservations[0].Instances[0].InstanceId' --output text"
