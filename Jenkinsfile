@@ -35,24 +35,18 @@ pipeline {
                 }
             }
         }
-        stage('Checking S3 Bucked if Created') {
-            steps {
-                script {
-                    sh 'aws s3 ls'
-                }
+        post {
+            success {
+                // Stage to run on success
+                echo "Build SUCCEDED!"
             }
-        }
-        stage('Destroy Infrastructure') {
-            steps {
-                script {
-                    echo 'Waiting for 3 days before executing Terraform destroy...'
-                    // Sleep for 3 days (259,200 seconds)
-                    sleep time: 259200, unit: 'SECONDS'
-                    echo '!!!!!'
-                    echo 'Everything worked as expected. Now deleting resources.'
-                    echo '!!!!!'
-                    sh 'terraform destroy -auto-approve'
-                }
+            failed {
+                // Stage to run on fail
+                echo "Build FAILED!"
+            }
+            always {
+                // Stage to run always
+                echo "Always POST"
             }
         }
     }
