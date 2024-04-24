@@ -24,17 +24,17 @@ pipeline {
             steps {
                 dir('apps/nodejs') {
                     script {
-                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/nodejs:v1 .'
                     }
                 }
                 dir('apps/react') {
                     script {
-                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/react:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/react:v1 .'
                     }
                 }
                 dir('apps/postgresql') {
                     script {
-                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres:v1 .'
+                        sh 'docker build -t 621627302500.dkr.ecr.us-east-1.amazonaws.com/project/postgres:v1 .'
                     }
                 }
             }
