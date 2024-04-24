@@ -45,7 +45,7 @@ pipeline {
         always {
             // Stage to run always
             dir('iac-files') {
-                sh(script: 'terraform destroy -auto-approve', returnStdout: false)
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
             }
         }
     }

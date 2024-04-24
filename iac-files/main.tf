@@ -12,7 +12,19 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "test-create-s3-bucket" {
-  bucket = "test-create-s3-bucket-ziya-testing"
-}
+resource "aws_ecr_repository" "ziyaasici-ECR" {
+  name                 = "ziyaasici"
+  image_tag_mutability = "MUTABLE"
 
+  lifecycle {
+    ignore_changes = [
+      image_tag_mutability,
+      scan_on_push
+    ]
+  }
+
+  tags = {
+    Name        = "Jenkins Project ECR"
+    Environment = "Production"
+  }
+}
