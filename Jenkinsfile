@@ -51,12 +51,5 @@ pipeline {
                 }
             }
         }
-        stage('Check Created S3s') {
-            steps {
-                script {
-                    sh 'aws s3 ls'
-                }
-            }
-        }
     }
 }
