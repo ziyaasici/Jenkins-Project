@@ -1,10 +1,10 @@
 pipeline {
     agent any
     
-    // environment {
-    //     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-    //     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    // }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
 
     stages {
         stage('AWS Integration'){
@@ -19,11 +19,11 @@ pipeline {
                     }
             }
         }
-        // stage('Checkout') {
-        //     steps {
-        //         git 'https://github.com/ziyaasici/Jenkins-Project.git'
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/ziyaasici/Jenkins-Project.git'
+            }
+        }
         // stage('Terraform Init') {
         //     steps {
         //         script {
