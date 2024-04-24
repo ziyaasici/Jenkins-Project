@@ -13,15 +13,8 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "ziyaasici-ECR" {
-  name                 = "ziyaasici"
+  name                 = "ziyaasici/jenkins"
   image_tag_mutability = "MUTABLE"
-
-  lifecycle {
-    ignore_changes = [
-      image_tag_mutability,
-      scan_on_push
-    ]
-  }
 
   tags = {
     Name        = "Jenkins Project ECR"
