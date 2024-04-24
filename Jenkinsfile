@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Apply') {
+        stage('Checking S3 Bucked if Created') {
             steps {
                 script {
                     sh 'aws s3 ls'
