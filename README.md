@@ -10,14 +10,14 @@
 ## Variables
 
 - **Key Variable:** The `key` variable is set to `"jenkins-project"` and is used as the name for the SSH key pair for the EC2 instance.
-- **User Variable:** The `user` variable is set to `"techpro"` which is used to determine user-specific configurations or contexts.
+- **User Variable:** The `user` variable is set to `"ziya"` which is used to determine user-specific configurations or contexts.
 
 ## EC2 Instance
 
 - **Resource Type:** `aws_instance`
 - **Instance Type:** `t2.micro`
 - **AMI:** The AMI used is `"ami-0230bd60aa48260c6"`.
-- **IAM Role:** Associated with a specific IAM role named `jenkins-project-profile-techpro`.
+- **IAM Role:** Associated with a specific IAM role named `jenkins-project-profile-ziya`.
 - **Tags:** The instance is tagged with a `Name` of `"jenkins_project"`.
 
 ## Security Group
