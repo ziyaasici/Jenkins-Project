@@ -13,10 +13,10 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'AWS-Jenkins',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
-
-                        sh "aws s3 ls"
-                    }
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+                    // {
+                    //     sh "aws s3 ls"
+                    // }
             }
         }
         stage('Testing') {
@@ -27,7 +27,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
-                sh "cd iac-files"
             }
         }
         stage('Terraform Init') {
@@ -58,5 +57,12 @@ pipeline {
                 }
             }
         }
+        stage('Check Created S3s') {
+            steps {
+                    script {
+                        sh 'aws s3 ls'
+                    }
+                }
+            }
     }
 }
