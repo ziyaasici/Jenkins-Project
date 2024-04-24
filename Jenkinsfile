@@ -33,20 +33,20 @@ pipeline {
             }
         }
     }
-    post {
-        // success {
-        //     // Stage to run on success
-        //     echo "Build SUCCEDED!"
-        // }
-        // failure {
-        //     // Stage to run on fail
-        //     echo "Build FAILED!"
-        // }
-        always {
-            // Stage to run always
-            dir('iac-files') {
-                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-            }
-        }
-    }
+    // post {
+    //     // success {
+    //     //     // Stage to run on success
+    //     //     echo "Build SUCCEDED!"
+    //     // }
+    //     // failure {
+    //     //     // Stage to run on fail
+    //     //     echo "Build FAILED!"
+    //     // }
+    //     always {
+    //         // Stage to run always
+    //         dir('iac-files') {
+    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+    //         }
+    //     }
+    // }
 }
