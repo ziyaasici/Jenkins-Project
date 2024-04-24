@@ -1,19 +1,12 @@
 FROM node:14
 
-# Create app directory
 WORKDIR /usr/src/app
 
-RUN pwd
-
-COPY ./nodejs/server/package*.json ./
+COPY server/package*.json ./
 
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
 
-
-# copy all files into the image
-COPY ./nodejs/server/ .
+COPY server/ .
 
 EXPOSE 5000
 
