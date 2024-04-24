@@ -23,38 +23,38 @@ pipeline {
                 }
             }
         }
-        // stage('Build Images') {
-        //     steps {
-        //         dir('apps/nodejs') {
-        //             script {
-        //                 sh(script: 'docker build -t nodejs:v1 .', returnStdout: true)
-        //             }
-        //         }
-        //         dir('apps/react') {
-        //             script {
-        //                 sh(script: 'docker build -t react:v1 .', returnStdout: true)
-        //             }
-        //         }
-        //         dir('apps/postgresql') {
-        //             script {
-        //                 sh(script: 'docker build -t postgresql:v1 .', returnStdout: true)
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Push Images to ECR') {
-        //     steps {
-        //         script {
-        //             sh(script: 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}', returnStdout: true)
-        //             sh(script: 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1', returnStdout: true)
-        //             sh(script: 'docker tag react:v1 ${ECR_REPO}/react:v1', returnStdout: true)
-        //             sh(script: 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1', returnStdout: true)
-        //             sh(script: 'docker push ${ECR_REPO}/postgresql:v1', returnStdout: true)
-        //             sh(script: 'docker push ${ECR_REPO}/react:v1', returnStdout: true)
-        //             sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
-        //         }
-        //     }
-        // }
+        stage('Build Images') {
+            steps {
+                dir('apps/nodejs') {
+                    script {
+                        sh(script: 'docker build -t nodejs:v1 .', returnStdout: true)
+                    }
+                }
+                dir('apps/react') {
+                    script {
+                        sh(script: 'docker build -t react:v1 .', returnStdout: true)
+                    }
+                }
+                dir('apps/postgresql') {
+                    script {
+                        sh(script: 'docker build -t postgresql:v1 .', returnStdout: true)
+                    }
+                }
+            }
+        }
+        stage('Push Images to ECR') {
+            steps {
+                script {
+                    sh(script: 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}', returnStdout: true)
+                    sh(script: 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1', returnStdout: true)
+                    sh(script: 'docker tag react:v1 ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
+                }
+            }
+        }
         stage('Wait') {
             steps {
                 script {
