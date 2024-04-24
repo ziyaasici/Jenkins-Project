@@ -24,7 +24,6 @@ pipeline {
             steps {
                 dir('nodejs') {
                     script {
-                        sh 'pwd'
                         sh 'docker build -t ziyaasici/nodejs:v1 .'
                     }
                 }
