@@ -43,7 +43,9 @@ pipeline {
             steps {
                 script {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/jenkins:latest'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/jenkins/postgres:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/jenkins/react:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/jenkins/nodejs:v1'
                 }
             }
 
