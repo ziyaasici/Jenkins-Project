@@ -1,33 +1,51 @@
 version: "3.7"
 
 services:
-    # postgre:
-    #     image: postgres
-    #     restart: always
-    #     environment:
-    #         POSTGRES_PASSWORD: Pp123456789
-    #     networks:
-    #         - phpnet
-    #     ports:
-    #         - "5432:5432"
-
+    postgresql:
+        image: postgres:v1
+        environment:
+            POSTGRES_PASSWORD: Pp123456789
+        networks:
+            - project
+        ports:
+            - "5432:5432"
+        # volumes:
+        #     - phpvol:/var/lib/mysql
     nodejs:
-        image: node:14
+        image: nodejs:v1
         restart: always
-        # environment:
-        #     SERVER_PORT: 5000
-        #     DB_USER: postgres
-        #     DB_PASSWORD: Pp123456789
-        #     DB_NAME: techprotodo
-        #     DB_HOST: todo_postgre
-        #     DB_PORT: 5432
-        # depends_on:
-        #     - postgre
+        environment:
+            SERVER_PORT: 5000
+            DB_USER: postgres
+            DB_PASSWORD: Pp123456789
+            DB_NAME: techprotodo
+            DB_HOST: postgresql
+            DB_PORT: 5432
+        depends_on:
+            - postgresql
         ports:
             - "5000:5000"
         networks:
-            - phpnet
+            - project
+    react:
+        image: react:v1
+        restart: always
+        environment:
+            REACT_APP_BASE_URL: http://35.172.227.131:5000/
+        depends_on:
+            - postgresql
+        ports:
+            - "3000:3000"
+        networks:
+            - project
 
 networks:
-    phpnet:
+    project:
         driver: bridge
+
+# volumes:
+#     phpvol:
+
+
+# docker-compose up
+# VOLUME EKLENECEK

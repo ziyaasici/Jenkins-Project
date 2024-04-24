@@ -27,21 +27,18 @@ pipeline {
                         sh 'docker build -t jenkins/nodejs:v1 .'
                     }
                 }
-            }
-            steps {
                 dir('apps/react') {
                     script {
                         sh 'docker build -t jenkins/react:v1 .'
                     }
                 }
-            }
-            steps {
                 dir('apps/postgresql') {
                     script {
                         sh 'docker build -t jenkins/postgres:v1 .'
                     }
                 }
             }
+
         }
     }
     // post {
