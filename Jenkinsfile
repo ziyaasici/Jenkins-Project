@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git 'https://github.com/ziyaasici/Jenkins-Project.git'
+                git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
             }
         }
         // stage('Terraform Init') {
