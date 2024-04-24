@@ -32,8 +32,10 @@ pipeline {
         }
         stage('Terraform Init') {
             steps {
-                script {
-                    sh 'terraform init'
+                dir('iac-files') {
+                    script {
+                        sh 'terraform init'
+                    }
                 }
             }
         }
