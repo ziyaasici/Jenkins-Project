@@ -24,30 +24,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
             }
         }
-        stage('Terraform Init') {
+        stage('Create Infrastructure') {
             steps {
                 dir('iac-files') {
                     script {
-                        sh 'terraform init'
-                    }
-                }
-            }
-        }
-        stage('Terraform Plan') {
-            steps {
-                dir('iac-files') {
-                    script {
+                        def output = sh(script: 'terraform init', returnStdout: true)
                         def output = sh(script: 'terraform plan', returnStdout: true)
-                        echo "\u001B[32m${output}\u001B[0m" // Green color for successful output
-                    }
-                }
-            }
-        }
-        stage('Terraform Apply') {
-            steps {
-                dir('iac-files') {
-                    script {
-                        sh 'terraform apply -auto-approve'
+                        def output = sh(script: 'terraform apply -auto-approve', returnStdout: true)
+                        output.eachLine { line ->
+                            if (!line.contains("= (known after apply)")) {
+                                echo line
+                            }
+                        }
                     }
                 }
             }
