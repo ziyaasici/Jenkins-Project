@@ -34,7 +34,7 @@ pipeline {
                 }
                 dir('apps/postgresql') {
                     script {
-                        sh(script: 'docker build -t postgres:v1 .', returnStdout: true)
+                        sh(script: 'docker build -t postgresql:v1 .', returnStdout: true)
                     }
                 }
             }
@@ -45,8 +45,8 @@ pipeline {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com'
                     sh 'docker tag nodejs:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
                     sh 'docker tag react:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
-                    sh 'docker tag postgres:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres/postgres:v1'
-                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgres/postgres:v1'
+                    sh 'docker tag postgresql:v1 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql/postgresql:v1'
+                    sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/postgresql/postgresql:v1'
                     sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/react/react:v1'
                     sh 'docker push 621627302500.dkr.ecr.us-east-1.amazonaws.com/nodejs/nodejs:v1'
                 }
