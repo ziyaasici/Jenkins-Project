@@ -44,7 +44,7 @@ resource "aws_instance" "tf-ec2" {
   key_name = aws_key_pair.key_docker.key_name
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   tags = {
-      Name = "${local.user}-Docker-instance"
+      Name = "${local.user}-Docker"
   }
 
   user_data = <<-EOF

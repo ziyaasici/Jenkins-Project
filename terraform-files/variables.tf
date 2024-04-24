@@ -20,7 +20,7 @@ variable "instancetype" {
 }
 
 variable "docker_user" {
-  default = "jenkins-project"
+  default = "Jenkins-Project"
 }
 
 variable "docker_ami" {

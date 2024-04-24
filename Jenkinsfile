@@ -3,6 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS=credentials('AWS-Jenkins')
         ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
+        AWS_REGION = 'us-east-1'
     }
     stages {
         // stage('Checkout') {
@@ -53,7 +54,28 @@ pipeline {
                 }
             }
         }
-    }
+        stage('Wait for EC2 to be Running') {
+            steps {
+                script {
+                    def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=your_instance_name --region ${AWS_REGION} --query 'Reservations[0].Instances[0].InstanceId' --output text"
+                    
+                    def instanceId = sh(script: awsCommand, returnStdout: true).trim()
+                    println "EC2 Instance ID: ${instanceId}"
+                    
+                    def ec2State = ''
+                    timeout(time: 10, unit: 'MINUTES') {
+                        while (ec2State != 'running') {
+                            def instanceStateCmd = "aws ec2 describe-instance-status --instance-ids ${instanceId} --region ${AWS_REGION} --query 'InstanceStatuses[0].InstanceState.Name' --output text"
+                            ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
+                            if (ec2State != 'running') {
+                                println "EC2 instance is not running yet. Waiting..."
+                                sleep time: 30, unit: 'SECONDS'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     post {
         always {
                 echo 'Removing local images!..'
