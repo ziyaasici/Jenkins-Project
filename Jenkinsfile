@@ -20,21 +20,35 @@ pipeline {
                 }
             }
         }
-        // stage('Build Images') {
-        //     steps {
-        //         dir('nodejs') {
-        //             script {
-        //                 sh 'docker build -t ziyaasici/nodejs:v1 .'
-        //             }
-        //         }
-        //     }
-        // }
-    }
-    post {
-        failure {
-            dir('iac-files') {
-                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+        stage('Build Images') {
+            steps {
+                dir('apps/nodejs') {
+                    script {
+                        sh 'docker build -t jenkins/nodejs:v1 .'
+                    }
+                }
+            }
+            steps {
+                dir('apps/react') {
+                    script {
+                        sh 'docker build -t jenkins/react:v1 .'
+                    }
+                }
+            }
+            steps {
+                dir('apps/postgresql') {
+                    script {
+                        sh 'docker build -t jenkins/postgres:v1 .'
+                    }
+                }
             }
         }
     }
+    // post {
+    //     failure {
+    //         dir('iac-files') {
+    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+    //         }
+    //     }
+    // }
 }
