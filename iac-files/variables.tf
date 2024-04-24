@@ -29,5 +29,5 @@ variable "docker_ami" {
 }
 
 variable "ecr" {
-  default = "jenkins"
+  default = "project"
 }
