@@ -51,8 +51,10 @@ pipeline {
         }
         stage('Terraform Apply') {
             steps {
-                script {
-                    sh 'terraform apply -auto-approve'
+                dir('iac-files') {
+                    script {
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
             }
         }
