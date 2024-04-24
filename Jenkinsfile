@@ -39,7 +39,7 @@ pipeline {
             // Stage to run on success
             echo "Build SUCCEDED!"
         }
-        failed {
+        failure {
             // Stage to run on fail
             echo "Build FAILED!"
         }
