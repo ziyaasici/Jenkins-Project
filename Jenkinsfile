@@ -69,7 +69,7 @@ pipeline {
                             ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
                             if (ec2State != 'running') {
                                 println "EC2 instance is not running yet. Waiting..."
-                                sleep time: 30, unit: 'SECONDS'
+                                sleep time: 30, unit: 'Seconds'
                             }
                         }
                     }
