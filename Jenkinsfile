@@ -1,6 +1,14 @@
 pipeline {
     agent any   
+    environment {
+        AWS_ACCESS=credentials('AWS-Jenkins')
+    }
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
+            }
+        }
         stage('Create Infrastructure') {
             steps {
                 dir('iac-files') {
