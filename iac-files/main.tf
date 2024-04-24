@@ -15,3 +15,7 @@ provider "aws" {
 resource "aws_s3_bucket" "test_create_s3_bucket" {
   bucket = "test_create_s3_bucket"
 }
+
+resource "aws_s3_bucket" "test_create_s3_bucket" {
+  bucket = "test_create_s3_bucket-second"
+}
