@@ -1,0 +1,10 @@
+---
+- name: SSH to EC2 Instance
+  hosts: ec2
+  gather_facts: no
+  tasks:
+    - name: SSH to EC2
+      become: yes
+      become_user: ec2-user
+      become_method: sudo
+      shell: "echo 'Hello from Ansible!'"

@@ -5,6 +5,8 @@ pipeline {
         ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
         DOCKER_SERVER = 'Jenkins-Project-Docker'
+        KEY_PAIR_NAME = 'docker_key_pair'
+        PRIVATE_KEY_FILE = '/home/ec2-user/Jenkins-Project'
     }
     stages {
         // stage('Checkout') {
@@ -19,6 +21,8 @@ pipeline {
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
+                        sh "aws ec2 create-key-pair --key-name ${KEY_PAIR_NAME} --query 'KeyMaterial' --output text > ${PRIVATE_KEY_FILE}"
+                        sh "chmod 400 ${PRIVATE_KEY_FILE}"
                     }
                 }
             }
