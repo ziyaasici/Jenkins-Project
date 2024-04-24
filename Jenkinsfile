@@ -13,34 +13,39 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'AWS-Jenkins',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+
+                        sh aws ls ec2
+                        
+                    }
+
             }
         }
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/ziyaasici/Jenkins-Project.git'
-            }
-        }
-        stage('Terraform Init') {
-            steps {
-                script {
-                    sh 'terraform init'
-                }
-            }
-        }
-        stage('Terraform Plan') {
-            steps {
-                script {
-                    sh 'terraform plan'
-                }
-            }
-        }
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/ziyaasici/Jenkins-Project.git'
+        //     }
+        // }
+        // stage('Terraform Init') {
+        //     steps {
+        //         script {
+        //             sh 'terraform init'
+        //         }
+        //     }
+        // }
+        // stage('Terraform Plan') {
+        //     steps {
+        //         script {
+        //             sh 'terraform plan'
+        //         }
+        //     }
+        // }
+        // stage('Terraform Apply') {
+        //     steps {
+        //         script {
+        //             sh 'terraform apply -auto-approve'
+        //         }
+        //     }
+        // }
     }
 }
