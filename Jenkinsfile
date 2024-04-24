@@ -30,11 +30,11 @@ pipeline {
         //     }
         // }
     }
-    // post {
-    //     failure {
-    //         dir('iac-files') {
-    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-    //         }
-    //     }
-    // }
+    post {
+        failure {
+            dir('iac-files') {
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            }
+        }
+    }
 }

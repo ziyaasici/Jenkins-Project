@@ -2,11 +2,13 @@ FROM node:14
 
 WORKDIR /usr/src/app
 
-COPY server/package*.json ./
+# COPY ./nodejs/server/package*.json ./
+COPY ./server/package*.json ./
 
 RUN npm install
 
-COPY server/ .
+# COPY ./nodejs/server/ .
+COPY ./server .
 
 EXPOSE 5000
 
