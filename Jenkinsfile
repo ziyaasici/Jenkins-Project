@@ -44,7 +44,7 @@ pipeline {
         // }
         always {
             // Stage to run always
-            sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            sh(script: 'terraform destroy -auto-approve', returnStdout: false)
         }
     }
 }
