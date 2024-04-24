@@ -19,11 +19,11 @@ pipeline {
                     }
             }
         }
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/ziyaasici/Jenkins-Project.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/ziyaasici/Jenkins-Project.git'
+        //     }
+        // }
         // stage('Terraform Init') {
         //     steps {
         //         script {
