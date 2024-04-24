@@ -40,14 +40,18 @@ pipeline {
                 // Stage to run on success
                 echo "Build SUCCEDED!"
             }
+        post {
             failed {
                 // Stage to run on fail
                 echo "Build FAILED!"
             }
+        }
+        post {
             always {
                 // Stage to run always
                 echo "Always POST"
             }
+        }
         }
     }
 }
