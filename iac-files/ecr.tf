@@ -3,8 +3,7 @@ resource "aws_ecr_repository" "nodejs" {
   image_tag_mutability = "MUTABLE"
 
   tags = {
-    Name        = "Jenkins Project ECR"
-    Environment = "Production"
+    Name        = "Jenkins Project NodeJS ECR"
   }
 }
 
@@ -13,8 +12,7 @@ resource "aws_ecr_repository" "react" {
   image_tag_mutability = "MUTABLE"
 
   tags = {
-    Name        = "Jenkins Project ECR"
-    Environment = "Production"
+    Name        = "Jenkins Project React ECR"
   }
 }
 
@@ -23,7 +21,6 @@ resource "aws_ecr_repository" "postgresql" {
   image_tag_mutability = "MUTABLE"
 
   tags = {
-    Name        = "Jenkins Project ECR"
-    Environment = "Production"
+    Name        = "Jenkins Project PostgreSQL ECR"
   }
 }

@@ -8,12 +8,11 @@ terraform {
 }
 
 provider "aws" {
-  # Configuration options
   region = "us-east-1"
 }
 
 variable "keypair" {
-  default = "ziya2"   #change here
+  default = "ziya2"
 }
 
 variable "instancetype" {
