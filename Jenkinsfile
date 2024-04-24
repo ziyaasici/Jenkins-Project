@@ -54,11 +54,10 @@ pipeline {
             }
         }
     }
-    // post {
-    //     failure {
-    //         dir('iac-files') {
-    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-    //         }
-    //     }
-    // }
+    post {
+        always {
+                echo 'Removing local images!..'
+                sh(script: 'docker rmi -f $(docker images)', returnStdout: true)
+            }
+        }
 }

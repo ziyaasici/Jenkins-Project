@@ -59,3 +59,14 @@
 # output "ssh-connection-command" {
 #   value = "ssh -i ${local.key-name}.pem ec2-user@${aws_instance.tf-ec2.public_ip}"
 # }
+
+
+resource "tls_private_key" "key_docker" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+
+resource "aws_key_pair" "key_docker" {
+  key_name   = "docker_key_pair"
+  public_key = tls_private_key.key_docker.public_key_openssh
+}
