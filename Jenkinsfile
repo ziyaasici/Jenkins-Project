@@ -5,18 +5,18 @@ pipeline {
     //     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     // }
     stages {
-        stage('AWS Integration'){
-            steps{
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS-Jenkins',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-                    {
-                        // sh "aws s3 ls"
-                    }
-            }
-        }
+        // stage('AWS Integration'){
+        //     steps{
+        //         withCredentials([[
+        //             $class: 'AmazonWebServicesCredentialsBinding',
+        //             credentialsId: 'AWS-Jenkins',
+        //             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        //             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+        //             {
+        //                 // sh "aws s3 ls"
+        //             }
+        //     }
+        // }
         // stage('Checkout') {
         //     steps {
         //         git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
