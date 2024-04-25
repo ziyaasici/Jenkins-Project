@@ -5,10 +5,11 @@ resource "aws_key_pair" "key-pair" {
 
 resource "tls_private_key" "rsa" {
     algorithm = "RSA"
-    rsa_bits = 4096
+    rsa_bits = 2048
 }
 
 resource "local_file" "docker-key" {
     content = tls_private_key.rsa.public_key_openssh
     filename = "docker-key-pair.pem"
 }
+
