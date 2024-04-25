@@ -15,7 +15,7 @@ pipeline {
         // }
         stage('Create Infrastructure') {
             steps {
-                dir('terra-infra') {
+                dir('terraform/terra-infra') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Create ECR') {
             steps {
-                dir('terra-ecr') {
+                dir('terraform/terra-ecr') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
