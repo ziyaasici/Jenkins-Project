@@ -19,14 +19,13 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
-                        sh(script: 'sudo chown -R jenkins:jenkins /home/ec2-user/Jenkins-Project', returnStdout: false)
                         sh(script: 'ssh-keygen -t rsa -b 2048 -f docker-key -C "ziya.asici@yahoo.com"', returnStdout: false)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
                         // sh "aws ec2 create-key-pair --key-name ${KEY_PAIR_NAME} --query 'KeyMaterial' --output text > ${PRIVATE_KEY_FILE}"
                         // sh "chmod 400 ${PRIVATE_KEY_FILE}"
-                        sh 'echo "${private_key}" > /home/ec2-user/Jenkins-Project/docker-key.pem'
+                        sh 'echo "${private_key}" > /tmp/docker-key.pem'
                     }
                 }
             }
