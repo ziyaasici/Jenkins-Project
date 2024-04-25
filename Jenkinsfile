@@ -18,6 +18,7 @@ pipeline {
                 dir('terraform/terra-infra') {
                     script {
                         sh 'terraform init'
+                        sh 'terraform plan'
                         sh 'terraform apply'
                         // sh(script: 'terraform init', returnStdout: true)
                         // sh(script: 'terraform apply -auto-approve', returnStdout: true)
