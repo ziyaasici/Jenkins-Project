@@ -17,10 +17,11 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
+                        sh 'ssh-keygen -t rsa -b 4096 -f /var/lib/jenkins/workspace/Jenkins-Project/terraform-files/ziya3'
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        sh 'aws ec2 get-key-pair --key-name my-keypair --query 'KeyMaterial' --output text > my-keypair.pem'
+                        sh 'aws ec2 get-key-pair --key-name my-keypair --query 'KeyMaterial' --output text > ziya3.pem'
                         sh 'cd /var/lib/jenkins/workspace/Jenkins-Project/terraform-files'
                         // sh 'sudo chmod 400 TF_key.pem'
                     }
