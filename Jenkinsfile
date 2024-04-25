@@ -19,7 +19,7 @@ pipeline {
                     script {
                         sh 'terraform init'
                         sh 'terraform plan'
-                        sh 'terraform apply'
+                        sh 'terraform apply -auto-approve'
                         // sh(script: 'terraform init', returnStdout: true)
                         // sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
