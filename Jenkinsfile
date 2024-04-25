@@ -26,8 +26,8 @@ pipeline {
                 }
                 dir('/var/lib/jenkins/workspace/Jenkins-Project/terraform/terra-infra') {
                     script {
-                        sh 'ls'
-                        
+                        sh 'sudo chmod 400 docker-key.pem'
+
                     }
                 }
             }
