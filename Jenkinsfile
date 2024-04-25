@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
-                        sh(script: 'ssh-keygen -t rsa -b 2048 -f my_key -y', returnStdout: false)
+                        sh(script: 'ssh-keygen -t rsa -b 2048 -f my_key', returnStdout: false)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
