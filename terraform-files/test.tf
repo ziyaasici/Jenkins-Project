@@ -1,22 +1,14 @@
-resource "aws_key_pair" "my_keypair" {
-  key_name   = "my-terraform-key"
-  public_key = file("${path.module}/my_key.pub")
+resource "aws_key_pair" "key-pair" {
+    key-name = docker-aws_key_pair
+    public_key = tls_private_ket.rsa.public_key_openssh
 }
 
-output "private_key" {
-  value     = tls_private_key.my_key.private_key_pem
-  sensitive = true
+resource "tls_private_key" "rsa" {
+    algorithm = "RSA"
+    rsa_bits = 4096
 }
 
-
-# Generate a new private key
-resource "tls_private_key" "my_key" {
-  algorithm   = "RSA"
-  rsa_bits    = 2048
-}
-
-# Output the private key in PEM format
-output "private_key" {
-  value     = tls_private_key.my_key.private_key_pem
-  sensitive = true
+resource "local_file" "docker-key" {
+    content = tls_private_key.rsa.tls_private_key_pem
+    filename = "docker"
 }

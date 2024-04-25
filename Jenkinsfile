@@ -19,13 +19,9 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
-                        sh(script: 'ssh-keygen -t rsa -b 2048 -f my_key', returnStdout: false)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        // sh "aws ec2 create-key-pair --key-name ${KEY_PAIR_NAME} --query 'KeyMaterial' --output text > ${PRIVATE_KEY_FILE}"
-                        // sh "chmod 400 ${PRIVATE_KEY_FILE}"
-                        sh 'echo "${private_key}" > /tmp/docker-key.pem'
                     }
                 }
             }
