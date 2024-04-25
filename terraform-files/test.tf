@@ -10,5 +10,5 @@ resource "tls_private_key" "rsa" {
 
 resource "local_file" "docker-key" {
     content = tls_private_key.rsa.public_key_openssh
-    filename = "docker"
+    filename = "docker-key-pair.pem"
 }
