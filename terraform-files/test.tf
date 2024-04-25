@@ -10,11 +10,11 @@ resource "tls_private_key" "rsa" {
 
 resource "local_file" "docker-key" {
     content = tls_private_key.rsa.public_key_openssh
-    filename = "TF_key"
+    filename = "TF_key.pem"
 }
 
 resource "aws_instance" "tf-ec2" {
     ami           = "ami-0d7a109bf30624c99"
     instance_type = "t2.micro"
-    key_name = "TF_key.pem"
+    key_name = "TF_key"
 }
