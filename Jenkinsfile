@@ -7,7 +7,7 @@ pipeline {
         DOCKER_SERVER = 'Jenkins-Project-Docker'
         KEY_PAIR_NAME = 'docker_key_pair'
         PRIVATE_KEY_FILE = '/tmp/docker_key_pair.pem'
-        
+
     }
     stages {
         // stage('Checkout') {
@@ -19,11 +19,13 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
+                        sh(script: 'ssh-keygen -t rsa -b 2048 -f jenkins-key -C "ziya.asici@yahoo.com"', returnStdout: false)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        sh "aws ec2 create-key-pair --key-name ${KEY_PAIR_NAME} --query 'KeyMaterial' --output text > ${PRIVATE_KEY_FILE}"
-                        sh "chmod 400 ${PRIVATE_KEY_FILE}"
+                        // sh "aws ec2 create-key-pair --key-name ${KEY_PAIR_NAME} --query 'KeyMaterial' --output text > ${PRIVATE_KEY_FILE}"
+                        // sh "chmod 400 ${PRIVATE_KEY_FILE}"
+                        sh 'echo "${private_key}" > /home/ec2-user/Jenkins-Project/docker-key.pem'
                     }
                 }
             }
@@ -46,7 +48,7 @@ pipeline {
                 //     }
                 // }
                 script {
-                    sh 'Images Built'
+                    sh 'echo "Images Built"'
                 }
             }
         }
@@ -62,29 +64,30 @@ pipeline {
                 //     sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
                 // }
                 script {
-                    sh 'Images Pushed'
+                    sh 'echo "Images Pushed"'
                 }
             }
         }
         stage('Wait') {
             steps {
                 script {
-                    def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=${DOCKER_SERVER} Name=instance-state-name,Values=running --region ${AWS_REGION} --query 'Reservations[*].Instances[*].InstanceId' --output text"
+                    // def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=${DOCKER_SERVER} Name=instance-state-name,Values=running --region ${AWS_REGION} --query 'Reservations[*].Instances[*].InstanceId' --output text"
                     
-                    def instanceId = sh(script: awsCommand, returnStdout: true).trim()
-                    println "EC2 Instance ID: ${instanceId}"
+                    // def instanceId = sh(script: awsCommand, returnStdout: true).trim()
+                    // println "EC2 Instance ID: ${instanceId}"
                     
-                    def ec2State = ''
-                    timeout(time: 10, unit: 'MINUTES') {
-                        while (ec2State != 'running') {
-                            def instanceStateCmd = "aws ec2 describe-instance-status --instance-ids ${instanceId} --region ${AWS_REGION} --query 'InstanceStatuses[0].InstanceState.Name' --output text"
-                            ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
-                            if (ec2State != 'running') {
-                                println "EC2 instance is not running yet. Waiting..."
-                                sleep time: 30, unit: 'SECONDS'
-                            }
-                        }
-                    }
+                    // def ec2State = ''
+                    // timeout(time: 10, unit: 'MINUTES') {
+                    //     while (ec2State != 'running') {
+                    //         def instanceStateCmd = "aws ec2 describe-instance-status --instance-ids ${instanceId} --region ${AWS_REGION} --query 'InstanceStatuses[0].InstanceState.Name' --output text"
+                    //         ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
+                    //         if (ec2State != 'running') {
+                    //             println "EC2 instance is not running yet. Waiting..."
+                    //             sleep time: 30, unit: 'SECONDS'
+                    //         }
+                    //     }
+                    // }
+                    sh 'echo "Wait is done."'
                 }
             }
         }

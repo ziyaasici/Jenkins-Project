@@ -5,14 +5,19 @@ locals {
   ami = var.docker_ami
 }
 
-resource "tls_private_key" "key_docker" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
-}
+# resource "tls_private_key" "key_docker" {
+#   algorithm = "RSA"
+#   rsa_bits  = 2048
+# }
 
-resource "aws_key_pair" "key_docker" {
-  key_name   = "docker_key_pair"
-  public_key = tls_private_key.key_docker.public_key_openssh
+# resource "aws_key_pair" "key_docker" {
+#   key_name   = "docker_key_pair"
+#   public_key = tls_private_key.key_docker.public_key_openssh
+# }
+
+resource "aws_key_pair" "docker-key" {
+  key_name   = "docker-key"
+  public_key = file("${path.module}/docker-key.pub")
 }
 
 resource "aws_security_group" "allow_ssh" {
@@ -41,7 +46,7 @@ resource "aws_security_group" "allow_ssh" {
 resource "aws_instance" "tf-ec2" {
   ami           = local.ami
   instance_type = local.instance-type
-  key_name = aws_key_pair.key_docker.key_name
+  key_name = aws_key_pair.docker-key.key_name
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   tags = {
       Name = "${local.user}-Docker"
