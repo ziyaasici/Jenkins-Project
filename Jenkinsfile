@@ -21,6 +21,7 @@ pipeline {
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
                         sh 'cd /var/lib/jenkins/workspace/Jenkins-Project/terraform-files'
+                        sh 'sudo chmod 400 TF_key.pem'
                     }
                 }
             }
