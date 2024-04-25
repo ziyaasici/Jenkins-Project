@@ -1,5 +1,5 @@
 resource "aws_key_pair" "key-pair" {
-    key-name = docker-aws_key_pair
+    key_name = docker-key-pair
     public_key = tls_private_key.rsa.public_key_openssh
 }
 

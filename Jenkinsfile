@@ -5,9 +5,6 @@ pipeline {
         ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
         DOCKER_SERVER = 'Jenkins-Project-Docker'
-        KEY_PAIR_NAME = 'docker_key_pair'
-        PRIVATE_KEY_FILE = '/tmp/docker_key_pair.pem'
-
     }
     stages {
         // stage('Checkout') {
