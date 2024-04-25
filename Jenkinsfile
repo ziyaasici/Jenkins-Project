@@ -15,77 +15,77 @@ pipeline {
         // }
         stage('Create Infrastructure') {
             steps {
-                dir('terraform-files') {
+                dir('terra-infra') {
                     script {
-                        sh 'ssh-keygen -t rsa -b 4096 -f /var/lib/jenkins/workspace/Jenkins-Project/terraform-files/ziya4'
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                        sh 'aws ec2 get-key-pair --key-name ziya4 --query 'KeyMaterial' --output text > ziya4.pem'
-                        sh 'cd /var/lib/jenkins/workspace/Jenkins-Project/terraform-files'
-                        // sh 'sudo chmod 400 TF_key.pem'
+                    }
+                }
+            }
+        }
+        stage('Create ECR') {
+            steps {
+                dir('terra-ecr') {
+                    script {
+                        sh(script: 'terraform init', returnStdout: true)
+                        sh(script: 'terraform plan', returnStdout: true)
+                        sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
             }
         }
         stage('Build Images') {
             steps {
-                // dir('apps/nodejs') {
-                //     script {
-                //         sh(script: 'docker build -t nodejs:v1 .', returnStdout: true)
-                //     }
-                // }
-                // dir('apps/react') {
-                //     script {
-                //         sh(script: 'docker build -t react:v1 .', returnStdout: true)
-                //     }
-                // }
-                // dir('apps/postgresql') {
-                //     script {
-                //         sh(script: 'docker build -t postgresql:v1 .', returnStdout: true)
-                //     }
-                // }
-                script {
-                    sh 'echo "Images Built"'
+                dir('apps/nodejs') {
+                    script {
+                        sh(script: 'docker build -t nodejs:v1 .', returnStdout: true)
+                    }
+                }
+                dir('apps/react') {
+                    script {
+                        sh(script: 'docker build -t react:v1 .', returnStdout: true)
+                    }
+                }
+                dir('apps/postgresql') {
+                    script {
+                        sh(script: 'docker build -t postgresql:v1 .', returnStdout: true)
+                    }
                 }
             }
         }
         stage('Push Images to ECR') {
             steps {
-                // script {
-                //     sh(script: 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}', returnStdout: true)
-                //     sh(script: 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1', returnStdout: true)
-                //     sh(script: 'docker tag react:v1 ${ECR_REPO}/react:v1', returnStdout: true)
-                //     sh(script: 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1', returnStdout: true)
-                //     sh(script: 'docker push ${ECR_REPO}/postgresql:v1', returnStdout: true)
-                //     sh(script: 'docker push ${ECR_REPO}/react:v1', returnStdout: true)
-                //     sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
-                // }
                 script {
-                    sh 'echo "Images Pushed"'
+                    sh(script: 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO}', returnStdout: true)
+                    sh(script: 'docker tag nodejs:v1 ${ECR_REPO}/nodejs:v1', returnStdout: true)
+                    sh(script: 'docker tag react:v1 ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker tag postgresql:v1 ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/postgresql:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/react:v1', returnStdout: true)
+                    sh(script: 'docker push ${ECR_REPO}/nodejs:v1', returnStdout: true)
                 }
             }
         }
         stage('Wait') {
             steps {
                 script {
-                    // def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=${DOCKER_SERVER} Name=instance-state-name,Values=running --region ${AWS_REGION} --query 'Reservations[*].Instances[*].InstanceId' --output text"
+                    def awsCommand = "aws ec2 describe-instances --filters Name=tag:Name,Values=${DOCKER_SERVER} Name=instance-state-name,Values=running --region ${AWS_REGION} --query 'Reservations[*].Instances[*].InstanceId' --output text"
                     
-                    // def instanceId = sh(script: awsCommand, returnStdout: true).trim()
-                    // println "EC2 Instance ID: ${instanceId}"
+                    def instanceId = sh(script: awsCommand, returnStdout: true).trim()
+                    println "EC2 Instance ID: ${instanceId}"
                     
-                    // def ec2State = ''
-                    // timeout(time: 10, unit: 'MINUTES') {
-                    //     while (ec2State != 'running') {
-                    //         def instanceStateCmd = "aws ec2 describe-instance-status --instance-ids ${instanceId} --region ${AWS_REGION} --query 'InstanceStatuses[0].InstanceState.Name' --output text"
-                    //         ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
-                    //         if (ec2State != 'running') {
-                    //             println "EC2 instance is not running yet. Waiting..."
-                    //             sleep time: 30, unit: 'SECONDS'
-                    //         }
-                    //     }
-                    // }
-                    sh 'echo "Wait is done."'
+                    def ec2State = ''
+                    timeout(time: 10, unit: 'MINUTES') {
+                        while (ec2State != 'running') {
+                            def instanceStateCmd = "aws ec2 describe-instance-status --instance-ids ${instanceId} --region ${AWS_REGION} --query 'InstanceStatuses[0].InstanceState.Name' --output text"
+                            ec2State = sh(script: instanceStateCmd, returnStdout: true).trim()
+                            if (ec2State != 'running') {
+                                println "EC2 instance is not running yet. Waiting..."
+                                sleep time: 30, unit: 'SECONDS'
+                            }
+                        }
+                    }
                 }
             }
         }

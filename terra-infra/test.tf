@@ -19,8 +19,5 @@
 #     key_name = "TF_key"
 # }
 
-resource "aws_key_pair" "my_keypair" {
-  key_name   = "my-keypair"
-  public_key = file("/var/lib/jenkins/workspace/Jenkins-Project/terraform-files/ziya3.pub")
-}
+
 
