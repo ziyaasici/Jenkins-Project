@@ -5,7 +5,7 @@ pipeline {
         ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
         DOCKER_SERVER = 'Jenkins-Project-Docker'
-        KEY_PAIR_PATH = '/var/lib/jenkins/workspace/Jenkins-Project/terraform-files'
+        KEY_PAIR_PATH = '/var/lib/jenkins/workspace/Jenkins-Project/terraform/terra-infra'
     }
     stages {
         // stage('Checkout') {
@@ -22,6 +22,12 @@ pipeline {
                         sh 'terraform apply -auto-approve'
                         // sh(script: 'terraform init', returnStdout: true)
                         // sh(script: 'terraform apply -auto-approve', returnStdout: true)
+                    }
+                }
+                dir('/var/lib/jenkins/workspace/Jenkins-Project/terraform/terra-infra') {
+                    script {
+                        sh 'ls'
+                        
                     }
                 }
             }
