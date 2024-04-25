@@ -19,6 +19,7 @@ pipeline {
             steps {
                 dir('terraform-files') {
                     script {
+                        sh(script: 'sudo chown -R jenkins:jenkins /home/ec2-user/Jenkins-Project', returnStdout: false)
                         sh(script: 'ssh-keygen -t rsa -b 2048 -f docker-key -C "ziya.asici@yahoo.com"', returnStdout: false)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
