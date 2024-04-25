@@ -17,9 +17,10 @@ pipeline {
             steps {
                 dir('terraform/terra-infra') {
                     script {
-                        sh(script: 'terraform init', returnStdout: true)
-                        sh(script: 'terraform plan', returnStdout: true)
-                        sh(script: 'terraform apply -auto-approve', returnStdout: true)
+                        sh 'terraform init'
+                        sh 'terraform apply'
+                        // sh(script: 'terraform init', returnStdout: true)
+                        // sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
             }
@@ -29,7 +30,6 @@ pipeline {
                 dir('terraform/terra-ecr') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
-                        sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
