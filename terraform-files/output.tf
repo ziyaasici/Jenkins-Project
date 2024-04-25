@@ -5,11 +5,11 @@
 #   value = aws_instance.tf-ec2.public_ip
 # }
 
-output "ssh-connection-command" {
-  value = "ssh -i ${aws_key_pair.key_docker.key_name}.pem ec2-user@${aws_instance.tf-ec2.public_ip}"
-}
+# output "ssh-connection-command" {
+#   value = "ssh -i ${aws_key_pair.key_docker.key_name}.pem ec2-user@${aws_instance.tf-ec2.public_ip}"
+# }
 
-output "private_key" {
-  value     = file("${path.module}/docker-key.pem")
-  sensitive = true
-}
+# output "private_key" {
+#   value     = file("${path.module}/docker-key.pem")
+#   sensitive = true
+# }
