@@ -85,10 +85,17 @@ pipeline {
         }
         stage('Deploy App') {
             steps {
+                // dir('Ansible') {
+                //     script {
+                //         sh(script: 'ansible-playbook playbook.yml', returnStdout: true)
+                //     }
+                // }
                 dir('Ansible') {
-                    script {
-                        sh(script: 'ansible-playbook playbook.yml', returnStdout: true)
-                    }
+                    ansiblePlaybook(
+                        // playbook: 'path/to/your/playbook.yml',
+                        // inventory: 'path/to/your/inventory',
+                        extras: '-e AWS_ACCESS=${AWS_ACCESS} -e AWS_REGION=${AWS_REGION} -e ECR_REPO=${ECR_REPO}'
+                    )
                 }
             }
         }
