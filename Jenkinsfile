@@ -93,16 +93,14 @@ pipeline {
             }
         }
     }
-    // post {
-    //     failure {
-    //         dir('apps/nodejs') {
-    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-    //         }
-    //         dir('terraform/terra-ecr') {
-    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-    //         }
-    //     }
-    // }
+    post {
+        failure {
+            dir('terraform/terra-infra') {
+                sh(script: 'aws ec2 delete-key-pair DockerKey', returnStdout: true)
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            }
+        }
+    }
 
 }
 

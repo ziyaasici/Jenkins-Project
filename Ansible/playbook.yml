@@ -8,4 +8,5 @@
       become: yes
       shell:
         cmd: |
-          echo "Hello from {{ ansible_host }}"
+          cd apps
+          docker-compose up
