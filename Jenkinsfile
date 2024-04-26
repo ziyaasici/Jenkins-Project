@@ -26,12 +26,10 @@ pipeline {
         }
         stage('Create ECR') {
             steps {
-                dir('terraform/terra-ecr') {
-                    script {
-                        sh(script: 'terraform init', returnStdout: true)
-                        sh(script: 'terraform plan', returnStdout: true)
-                        sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                    }
+                script {
+                    sh(script: 'aws ecr create-repository --repository-name nodejs --image-tag-mutability IMMUTABLE', returnStdout: true)
+                    sh(script: 'aws ecr create-repository --repository-name react --image-tag-mutability IMMUTABLE', returnStdout: true)
+                    sh(script: 'aws ecr create-repository --repository-name postgresql --image-tag-mutability IMMUTABLE', returnStdout: true)
                 }
             }
         }
