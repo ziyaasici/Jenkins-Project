@@ -33,17 +33,6 @@ pipeline {
                     createEcrRepositoryIfNotExists('nodejs')
                     createEcrRepositoryIfNotExists('react')
                     createEcrRepositoryIfNotExists('postgresql')
-
-
-                    def createEcrRepositoryIfNotExists(repositoryName) {
-                    def exists = sh(script: "aws ecr describe-repositories --repository-names ${repositoryName}", returnStatus: true) == 0
-                    
-                    if (!exists) {
-                        sh(script: "aws ecr create-repository --repository-name ${repositoryName} --image-tag-mutability IMMUTABLE", returnStdout: true)
-                        } else {
-                        echo "ECR repository '${repositoryName}' already exists."
-                        }
-                    }
                 }
             }
         }
@@ -113,4 +102,15 @@ pipeline {
     //         }
     //     }
     // }
+}
+
+
+def createEcrRepositoryIfNotExists(repositoryName) {
+    def exists = sh(script: "aws ecr describe-repositories --repository-names ${repositoryName}", returnStatus: true) == 0
+    
+    if (!exists) {
+        sh(script: "aws ecr create-repository --repository-name ${repositoryName} --image-tag-mutability IMMUTABLE", returnStdout: true)
+    } else {
+        echo "ECR repository '${repositoryName}' already exists."
+    }
 }
