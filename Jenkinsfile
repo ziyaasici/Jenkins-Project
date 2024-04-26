@@ -19,15 +19,33 @@ pipeline {
                 }
             }
         }
+
+
+        
         stage('Create ECR') {
             steps {
+                // script {
+                //     sh(script: 'aws ecr create-repository --repository-name nodejs --image-tag-mutability IMMUTABLE', returnStdout: true)
+                //     sh(script: 'aws ecr create-repository --repository-name react --image-tag-mutability IMMUTABLE', returnStdout: true)
+                //     sh(script: 'aws ecr create-repository --repository-name postgresql --image-tag-mutability IMMUTABLE', returnStdout: true)
+                // }
                 script {
-                    sh(script: 'aws ecr create-repository --repository-name nodejs --image-tag-mutability IMMUTABLE', returnStdout: true)
-                    sh(script: 'aws ecr create-repository --repository-name react --image-tag-mutability IMMUTABLE', returnStdout: true)
-                    sh(script: 'aws ecr create-repository --repository-name postgresql --image-tag-mutability IMMUTABLE', returnStdout: true)
+                    createEcrRepositoryIfNotExists('nodejs')
+                    createEcrRepositoryIfNotExists('react')
+                    createEcrRepositoryIfNotExists('postgresql')
                 }
             }
         }
+        def createEcrRepositoryIfNotExists(repositoryName) {
+            def exists = sh(script: "aws ecr describe-repositories --repository-names ${repositoryName}", returnStatus: true) == 0
+            
+            if (!exists) {
+                sh(script: "aws ecr create-repository --repository-name ${repositoryName} --image-tag-mutability IMMUTABLE", returnStdout: true)
+            } else {
+                echo "ECR repository '${repositoryName}' already exists."
+            }
+        }
+
         stage('Build Images') {
             steps {
                 dir('apps/nodejs') {
@@ -83,14 +101,14 @@ pipeline {
             }
         }
     }
-    post {
-        failure {
-            dir('apps/nodejs') {
-                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-            }
-            dir('terraform/terra-ecr') {
-                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
-            }
-        }
-    }
+    // post {
+    //     failure {
+    //         dir('apps/nodejs') {
+    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+    //         }
+    //         dir('terraform/terra-ecr') {
+    //             sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+    //         }
+    //     }
+    // }
 }
