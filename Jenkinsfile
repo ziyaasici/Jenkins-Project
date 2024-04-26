@@ -92,7 +92,7 @@ pipeline {
                 // }
                 dir('Ansible') {
                     ansiblePlaybook(
-                        // playbook: 'path/to/your/playbook.yml',
+                        playbook: 'playbook.yml',
                         // inventory: 'path/to/your/inventory',
                         extras: '-e AWS_ACCESS=${AWS_ACCESS} -e AWS_REGION=${AWS_REGION} -e ECR_REPO=${ECR_REPO}'
                     )
