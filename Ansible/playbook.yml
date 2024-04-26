@@ -79,6 +79,11 @@
     #   tags:
     #     - login_to_aws_ecr
 
+    - name: AWS CLI Test
+      shell: "aws s3 ls"
+      tags:
+        - laws_cli_test
+
     - name: Log in to AWS ECR
       shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
       tags:
