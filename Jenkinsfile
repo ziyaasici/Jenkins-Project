@@ -17,14 +17,8 @@ pipeline {
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
-                dir('Ansible') {
-                    script {
-                        sh(script: 'ansible-playbook playbook.yml', returnStdout: true)
-                    }
-                } 
-            } //Test
+            }
         }
-
         stage('Create ECR') {
             steps {
                 script {
@@ -84,6 +78,15 @@ pipeline {
                                 sleep time: 30, unit: 'SECONDS'
                             }
                         }
+                    }
+                }
+            }
+        }
+        stage('Ansible') {
+            steps {
+                dir('Ansible') {
+                    script {
+                        sh(script: 'ansible-playbook playbook.yml', returnStdout: true)
                     }
                 }
             }
