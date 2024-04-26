@@ -70,7 +70,7 @@
         - install_docker_compose
 
     - name: Log in to AWS ECR
-      shell: "aws ecr get-login-password --region your_region | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
+      shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
       tags:
         - login_to_aws_ecr
 
