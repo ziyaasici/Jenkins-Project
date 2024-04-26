@@ -8,5 +8,5 @@
       become: yes
       shell:
         cmd: |
-          cd apps
+          cd /usr/jenkins/workspace/Jenkins-Project/apps
           docker-compose up

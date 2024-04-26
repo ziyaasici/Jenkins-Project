@@ -83,7 +83,7 @@ pipeline {
                 }
             }
         }
-        stage('Ansible') {
+        stage('Deploy App') {
             steps {
                 dir('Ansible') {
                     script {
