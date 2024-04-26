@@ -101,6 +101,9 @@ pipeline {
         }
     }
     post {
+        success {
+            echo 'Everything Worked as EXPECTED!'
+        }
         failure {
             dir('terraform/terra-infra') {
                 sh(script: 'aws ec2 delete-key-pair --key-name DockerKey', returnStdout: true)
