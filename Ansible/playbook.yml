@@ -1,6 +1,6 @@
 ---
 - name: Execute shell commands on another EC2 instance
-  hosts: _Jenkins-Project-Docker
+  hosts: _Jenkins_Project_Docker
   gather_facts: no
 
   tasks:
