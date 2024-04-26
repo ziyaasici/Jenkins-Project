@@ -19,16 +19,8 @@ pipeline {
                 }
             }
         }
-
-
-
         stage('Create ECR') {
             steps {
-                // script {
-                //     sh(script: 'aws ecr create-repository --repository-name nodejs --image-tag-mutability IMMUTABLE', returnStdout: true)
-                //     sh(script: 'aws ecr create-repository --repository-name react --image-tag-mutability IMMUTABLE', returnStdout: true)
-                //     sh(script: 'aws ecr create-repository --repository-name postgresql --image-tag-mutability IMMUTABLE', returnStdout: true)
-                // }
                 script {
                     createEcrRepositoryIfNotExists('nodejs')
                     createEcrRepositoryIfNotExists('react')
@@ -36,7 +28,6 @@ pipeline {
                 }
             }
         }
-
         stage('Build Images') {
             steps {
                 dir('apps/nodejs') {
@@ -103,7 +94,6 @@ pipeline {
     //     }
     // }
 }
-
 
 def createEcrRepositoryIfNotExists(repositoryName) {
     def exists = sh(script: "aws ecr describe-repositories --repository-names ${repositoryName}", returnStatus: true) == 0
