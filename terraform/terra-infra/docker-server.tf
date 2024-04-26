@@ -31,7 +31,7 @@ resource "aws_security_group" "allow_ssh" {
 resource "aws_instance" "tf-ec2" {
   ami           = local.ami
   instance_type = local.instance-type
-  key_name = "ziya2"                                                #DEGISTIR
+  key_name = "DockerKey"                                                #DEGISTIR
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   tags = {
       Name = "${local.user}-Docker"
