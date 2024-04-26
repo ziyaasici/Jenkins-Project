@@ -9,7 +9,7 @@ pipeline {
     }
     stages {
         stage('Create Infrastructure') {
-            steps { // KEYPEM EKLENECEK CLI ILE
+            steps {
                 dir('terraform/terra-infra') {
                     script {
                         sh(script: 'aws ec2 create-key-pair --key-name DockerKey --output text > DockerKey.pem', returnStdout: true)
@@ -98,7 +98,6 @@ pipeline {
 
 def createEcrRepositoryIfNotExists(repositoryName) {
     def exists = sh(script: "aws ecr describe-repositories --repository-names ${repositoryName}", returnStatus: true) == 0
-    
     if (!exists) {
         sh(script: "aws ecr create-repository --repository-name ${repositoryName} --image-tag-mutability IMMUTABLE", returnStdout: true)
     } else {
