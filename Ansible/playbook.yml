@@ -79,19 +79,19 @@
     #   tags:
     #     - login_to_aws_ecr
 
-    - name: Log in to AWS ECR
-      shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
-      tags:
-        - login_to_aws_ecr
+    # - name: Log in to AWS ECR
+    #   shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
+    #   tags:
+    #     - login_to_aws_ecr
 
-    - name: Copy docker-compose.yml to server
-      copy:
-        src: /usr/jenkins/workspace/Jenkins-Project/apps/docker-compose.yml
-        dest: /home/ec2-user/docker-compose.yml
-      tags:
-        - copy_docker_compose_to_server
+    # - name: Copy docker-compose.yml to server
+    #   copy:
+    #     src: /usr/jenkins/workspace/Jenkins-Project/apps/docker-compose.yml
+    #     dest: /home/ec2-user/docker-compose.yml
+    #   tags:
+    #     - copy_docker_compose_to_server
 
-    - name: Start application with Docker Compose
-      shell: "docker-compose -f /home/ec2-user/docker-compose.yml up -d"
-      tags:
-        - start_application_with_docker_compose
+    # - name: Start application with Docker Compose
+    #   shell: "docker-compose -f /home/ec2-user/docker-compose.yml up -d"
+    #   tags:
+    #     - start_application_with_docker_compose
