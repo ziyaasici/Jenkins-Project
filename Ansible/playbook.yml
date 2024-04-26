@@ -68,17 +68,6 @@
       tags:
         - install_docker_compose
 
-    # - name: Log in to AWS ECR
-    #   shell: >
-    #     docker login --username AWS --password-stdin
-    #     -e AWS_ACCESS_KEY_ID={{ aws_access_key_id }}
-    #     -e AWS_SECRET_ACCESS_KEY={{ aws_secret_access_key }}
-    #     {{ ECR_REPO }}
-    #   args:
-    #     executable: /bin/bash
-    #   tags:
-    #     - login_to_aws_ecr
-
     - name: AWS CLI Test
       shell: |
         aws s3 ls
@@ -89,17 +78,20 @@
 
     - name: Log in to AWS ECR
       shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
       tags:
         - login_to_aws_ecr
 
-    # - name: Copy docker-compose.yml to server
-    #   copy:
-    #     src: /usr/jenkins/workspace/Jenkins-Project/apps/docker-compose.yml
-    #     dest: /home/ec2-user/docker-compose.yml
-    #   tags:
-    #     - copy_docker_compose_to_server
+    - name: Copy docker-compose.yml to server
+      copy:
+        src: /usr/jenkins/workspace/Jenkins-Project/apps/docker-compose.yml
+        dest: /home/ec2-user/docker-compose.yml
+      tags:
+        - copy_docker_compose_to_server
 
-    # - name: Start application with Docker Compose
-    #   shell: "docker-compose -f /home/ec2-user/docker-compose.yml up -d"
-    #   tags:
-    #     - start_application_with_docker_compose
+    - name: Start application with Docker Compose
+      shell: "docker-compose -f /home/ec2-user/docker-compose.yml up -d"
+      tags:
+        - start_application_with_docker_compose
