@@ -8,13 +8,8 @@ pipeline {
         KEY_PAIR_PATH = '/var/lib/jenkins/workspace/Jenkins-Project/terraform/terra-infra '
     }
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/ziyaasici/Jenkins-Project.git'
-        //     }
-        // }
         stage('Create Infrastructure') {
-            steps {
+            steps { // KEYPEM EKLENECEK CLI ILE
                 dir('terraform/terra-infra') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
