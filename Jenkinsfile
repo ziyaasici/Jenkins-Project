@@ -5,7 +5,7 @@ pipeline {
         ECR_REPO = '621627302500.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
         DOCKER_SERVER = 'Jenkins-Project-Docker'
-        KEY_PAIR_PATH = '/usr/jenkins/workspace/Jenkins-Project/terraform/terra-infra' //Agent-Node Uzerinde
+        KEY_PAIR_PATH = '/usr/jenkins/workspace/Jenkins-Project/terraform/terra-infra' //Agent-Node Uzerinde Kaydedildi
     }
     stages {
         stage('Create Infrastructure') {

@@ -1,10 +1,11 @@
 ---
-- name: SSH to EC2 Instance
-  hosts: ec2
+- name: Execute shell commands on another EC2 instance
+  hosts: your_ec2_instance
   gather_facts: no
+
   tasks:
-    - name: SSH to EC2
+    - name: Run shell commands
       become: yes
-      become_user: ec2-user
-      become_method: sudo
-      shell: "echo 'Hello from Ansible!'"
+      shell:
+        cmd: |
+          echo "Hello from {{ ansible_host }}"
