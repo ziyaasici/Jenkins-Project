@@ -3,11 +3,6 @@
   hosts: _Jenkins_Project_Docker
   gather_facts: no
   become: yes
-  environment:
-    AWS_ACCESS_KEY_ID: "{{ aws_access_key_id }}"
-    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key }}"
-    ECR_REPO: "621627302500.dkr.ecr.us-east-1.amazonaws.com"
-
   tasks:
     - name: Update system packages
       yum:
