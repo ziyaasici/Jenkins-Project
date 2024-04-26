@@ -11,7 +11,7 @@ pipeline {
             steps {
                 dir('terraform/terra-infra') {
                     script {
-                        sh(script: 'aws ec2 create-key-pair --key-name DockerKey --region ${AWS_REGION} --query "KeyMaterial" --output text > DockerKey.pem', returnStdout: true) // Existing Check Ekle
+                        sh(script: 'aws ec2 create-key-pair --key-name DockerKey --region ${AWS_REGION} --query "KeyMaterial" --output text > DockerKey.pem', returnStdout: true) //  Existing Check Ekle
                         sh(script: 'sudo chmod 600 DockerKey.pem', returnStatus: true)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
