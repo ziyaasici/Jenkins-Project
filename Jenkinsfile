@@ -17,17 +17,9 @@ pipeline {
             steps {
                 dir('terraform/terra-infra') {
                     script {
-                        sh 'terraform init'
-                        sh 'terraform plan'
-                        sh 'terraform apply -auto-approve'
-                        // sh(script: 'terraform init', returnStdout: true)
-                        // sh(script: 'terraform apply -auto-approve', returnStdout: true)
-                    }
-                }
-                dir('/var/lib/jenkins/workspace/Jenkins-Project/terraform/terra-infra') {
-                    script {
-                        sh 'sudo chmod 400 docker-key.pem'
-
+                        sh(script: 'terraform init', returnStdout: true)
+                        sh(script: 'terraform plan', returnStdout: true)
+                        sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
             }
@@ -37,6 +29,7 @@ pipeline {
                 dir('terraform/terra-ecr') {
                     script {
                         sh(script: 'terraform init', returnStdout: true)
+                        sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
                     }
                 }
@@ -97,10 +90,14 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //             echo 'Removing local images!..'
-    //             sh(script: 'docker rmi -f $(docker images)', returnStdout: true)
-    //         }
-    //     }
+    post {
+        failure {
+            dir('apps/nodejs') {
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            }
+            dir('terraform/terra-ecr') {
+                sh(script: 'terraform destroy -auto-approve', returnStdout: true)
+            }
+        }
+    }
 }
