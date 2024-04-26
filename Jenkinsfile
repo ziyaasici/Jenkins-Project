@@ -102,6 +102,7 @@ pipeline {
     }
     post {
         failure {
+            displayName "Post"
             dir('terraform/terra-infra') {
                 sh(script: 'aws ec2 delete-key-pair --key-name DockerKey', returnStdout: true)
                 sh(script: 'terraform destroy -auto-approve', returnStdout: true)
