@@ -12,6 +12,7 @@ pipeline {
                 dir('terraform/terra-infra') {
                     script {
                         sh(script: 'aws ec2 create-key-pair --key-name DockerKey --output text > DockerKey.pem', returnStdout: true)
+                        sh(script: 'sudo chmod 400 DockerKey.pem', returnStatus: true)
                         sh(script: 'terraform init', returnStdout: true)
                         sh(script: 'terraform plan', returnStdout: true)
                         sh(script: 'terraform apply -auto-approve', returnStdout: true)
