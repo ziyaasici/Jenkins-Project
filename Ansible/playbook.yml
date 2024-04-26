@@ -80,9 +80,12 @@
     #     - login_to_aws_ecr
 
     - name: AWS CLI Test
-      shell: "aws s3 ls"
-      tags:
-        - laws_cli_test
+      shell: |
+        aws s3 ls
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+      register: aws_cli_result
 
     - name: Log in to AWS ECR
       shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 621627302500.dkr.ecr.us-east-1.amazonaws.com"

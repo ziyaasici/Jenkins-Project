@@ -83,6 +83,22 @@ pipeline {
                 }
             }
         }
+        stage('AWS CLI Test') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    credentialsId: 'AWS-Jenkins',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    dir('Ansible') {
+                        ansiblePlaybook(
+                            playbook: 'playbook.yml',
+                        )
+                    }
+                }
+            }
+        }
         stage('Deploy App') {
             steps {
                 // dir('Ansible') {
